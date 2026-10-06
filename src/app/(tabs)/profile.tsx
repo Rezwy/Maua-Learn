@@ -1,7 +1,6 @@
 import { useGlobalLessonStore } from '@/utils/lesson-store';
 import { useState } from 'react';
 import {
-  Alert,
   Modal,
   Platform,
   Pressable,
@@ -85,6 +84,14 @@ export default function ProfileScreen() {
               <View style={[styles.rowInner, styles.rowDivider]}>
                 <Text style={styles.rowLabel}>Completed Lessons</Text>
                 <Text style={styles.rowValue}>{completedCount}</Text>
+              </View>
+            </View>
+            <View style={styles.row}>
+              <View style={[styles.rowInner, styles.rowDivider]}>
+                <Text style={styles.rowLabel}>Async Friction Doctor</Text>
+                <Text style={[styles.rowValue, { color: IOS.accentGreen, fontWeight: '600' }]}>
+                  Verified Active
+                </Text>
               </View>
             </View>
             <View style={styles.row}>
