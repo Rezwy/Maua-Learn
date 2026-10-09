@@ -48,11 +48,28 @@ export default function HomeScreen() {
           <View style={s.flex}><Text style={s.sectionTitle}>Optional decision drills</Text><Text style={s.caption}>Four short exercises · feedback after each choice</Text></View><Text style={s.chevron}>{showDrills ? '−' : '+'}</Text>
         </Pressable>
         {showDrills && <View style={s.library}>
-          <Text style={s.body}>These are standalone quizzes for extra practice. They have a shorter format than the guided lesson.</Text>
-          {LESSONS.slice(1).map((drill) => <View key={drill.id} style={s.drill}>
-            <Text style={s.rowTitle}>{drill.title}</Text><Text style={s.caption}>{drill.description}</Text>
-            <TactilePressable accessibilityRole="button" accessibilityLabel={`Open ${drill.title} decision drill`} onPress={() => openLesson(drill.id, completedLessonIds.includes(drill.id) ? 'review' : undefined)} style={s.linkButton}><Text style={s.link}>{completedLessonIds.includes(drill.id) ? 'Review drill' : 'Open drill'} · {drill.durationMinutes} min</Text></TactilePressable>
-          </View>)}
+          <View style={s.drillGroup}>
+            {LESSONS.slice(1).map((drill, index) => {
+              const isComplete = completedLessonIds.includes(drill.id);
+              return <Pressable
+                key={drill.id}
+                accessibilityRole="button"
+                accessibilityLabel={`${isComplete ? 'Review' : 'Open'} ${drill.title} decision drill, ${drill.durationMinutes} minutes`}
+                accessibilityHint="Opens the decision drill"
+                onPress={() => openLesson(drill.id, isComplete ? 'review' : undefined)}
+                style={({ pressed }) => [s.drillRow, index > 0 && s.drillDivider, pressed && s.drillRowPressed]}>
+                <View style={s.drillContent}>
+                  <Text style={s.rowTitle}>{drill.title}</Text>
+                  <Text style={s.drillDescription}>{drill.description}</Text>
+                  {isComplete && <Text style={s.drillCompleted}>Completed · Review drill</Text>}
+                </View>
+                <View style={s.drillTrailing}>
+                  <Text style={s.drillDuration}>{drill.durationMinutes} min</Text>
+                  <Text aria-hidden style={s.drillChevron}>›</Text>
+                </View>
+              </Pressable>;
+            })}
+          </View>
         </View>}
         <Text style={s.footer}>English demo · Fictional workplace scenarios{'\n'}Progress stays on this device.</Text>
       </ScrollView>
@@ -70,7 +87,12 @@ const s = StyleSheet.create({
   primary: { backgroundColor: '#1C1C1E', borderRadius: 14, minHeight: 52, padding: 14, alignItems: 'center' }, primaryText: { color: '#FFFFFF', fontSize: 17, fontWeight: '600', textAlign: 'center' },
   status: { fontSize: 13, color: '#636366', lineHeight: 19, marginTop: 4 }, progress: { paddingVertical: 24, gap: 8 }, sectionTitle: { fontSize: 19, fontWeight: '600', color: '#1C1C1E' },
   libraryToggle: { flexDirection: 'row', alignItems: 'center', gap: 12, borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: '#C7C7CC', paddingVertical: 18, minHeight: 52 }, chevron: { fontSize: 25, color: '#636366' }, caption: { fontSize: 14, color: '#636366', lineHeight: 21, marginTop: 4 },
-  library: { gap: 8 }, drill: { borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: '#D1D1D6', paddingVertical: 16 }, rowTitle: { fontSize: 17, fontWeight: '600', color: '#1C1C1E' },
+  library: { paddingTop: 4 }, drillGroup: { backgroundColor: '#FFFFFF', borderRadius: 16, overflow: 'hidden' },
+  drillRow: { minHeight: 88, paddingHorizontal: 16, paddingVertical: 16, flexDirection: 'row', alignItems: 'center', gap: 12 },
+  drillDivider: { borderTopWidth: StyleSheet.hairlineWidth, borderTopColor: '#D1D1D6' }, drillRowPressed: { backgroundColor: '#E5E5EA' },
+  drillContent: { flex: 1, gap: 5 }, rowTitle: { fontSize: 17, fontWeight: '600', color: '#1C1C1E' },
+  drillDescription: { fontSize: 14, lineHeight: 20, color: '#636366' }, drillCompleted: { fontSize: 13, color: '#636366' },
+  drillTrailing: { flexDirection: 'row', alignItems: 'center', gap: 8 }, drillDuration: { fontSize: 14, color: '#636366' }, drillChevron: { fontSize: 26, lineHeight: 28, color: '#8E8E93' },
   linkButton: { minHeight: 44, justifyContent: 'center', paddingVertical: 10 }, link: { fontSize: 16, color: '#1C1C1E', fontWeight: '600' }, resume: { marginTop: 24, padding: 16, backgroundColor: '#E5E5EA', borderRadius: 16, gap: 8 },
   footer: { marginTop: 24, fontSize: 12, color: '#636366', lineHeight: 18, textAlign: 'center' }, pressed: { opacity: 0.5 },
 });

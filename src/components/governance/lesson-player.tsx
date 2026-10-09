@@ -85,13 +85,16 @@ export function LessonScreen({ lesson, initialSession, onProgress, onExit, onCom
   return (
     <SafeAreaView style={styles.safe} accessibilityLanguage="en">
       <View style={styles.header}>
-        <Pressable accessibilityRole="button" accessibilityLabel="Previous step" accessibilityHint="Review your saved work. Committed choices remain unchanged."
-          disabled={session.stepIndex === 0} accessibilityState={{ disabled: session.stepIndex === 0 }}
-          onPress={() => goToStep(session.stepIndex - 1)} style={({ pressed }) => [styles.headerButton, (pressed || session.stepIndex === 0) && styles.dim]}>
-          <Text style={styles.headerText}>‹ Back</Text>
-        </Pressable>
-        <Pressable accessibilityRole="button" accessibilityLabel="Save and exit lesson" onPress={() => { Keyboard.dismiss(); onExit(session); }} style={({ pressed }) => [styles.headerButton, pressed && styles.dim]}>
-          <Text style={styles.headerText}>Save & exit</Text>
+        {session.stepIndex > 0 ? (
+          <Pressable accessibilityRole="button" accessibilityLabel="Previous step" accessibilityHint="Review your saved work. Committed choices remain unchanged."
+            onPress={() => goToStep(session.stepIndex - 1)} style={({ pressed }) => [styles.backButton, pressed && styles.headerPressed]}>
+            <Text aria-hidden style={styles.backChevron}>‹</Text>
+            <Text style={styles.backText}>Back</Text>
+          </Pressable>
+        ) : <Text style={styles.headerTitle}>Lesson</Text>}
+        <Pressable accessibilityRole="button" accessibilityLabel="Save and exit lesson" accessibilityHint="Your place and answers will be saved."
+          onPress={() => { Keyboard.dismiss(); onExit(session); }} style={({ pressed }) => [styles.exitButton, pressed && styles.exitPressed]}>
+          <Text style={styles.exitText}>Save & exit</Text>
         </Pressable>
       </View>
       <View style={styles.progressArea}>
@@ -127,10 +130,14 @@ export function LessonScreen({ lesson, initialSession, onProgress, onExit, onCom
 }
 
 const styles = StyleSheet.create({
-  safe: { flex: 1, backgroundColor: '#F2F2F7' }, flex: { flex: 1 }, dim: { opacity: 0.4 },
-  header: { flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 16, backgroundColor: '#FFFFFF' },
-  headerButton: { minHeight: 48, justifyContent: 'center', paddingHorizontal: 4 },
-  headerText: { fontSize: 17, fontWeight: '500', color: '#1C1C1E' },
+  safe: { flex: 1, backgroundColor: '#F2F2F7' }, flex: { flex: 1 },
+  header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', minHeight: 60, paddingHorizontal: 16, backgroundColor: '#FFFFFF' },
+  headerTitle: { fontSize: 17, fontWeight: '600', color: '#1C1C1E' },
+  backButton: { minHeight: 44, flexDirection: 'row', alignItems: 'center', paddingRight: 12, borderRadius: 10 },
+  backChevron: { fontSize: 30, lineHeight: 32, color: '#1C1C1E', marginTop: -3, marginRight: 4 },
+  backText: { fontSize: 17, color: '#1C1C1E' }, headerPressed: { opacity: 0.55 },
+  exitButton: { minHeight: 44, justifyContent: 'center', paddingHorizontal: 14, backgroundColor: '#F2F2F7', borderRadius: 11 },
+  exitText: { fontSize: 15, fontWeight: '600', color: '#1C1C1E' }, exitPressed: { backgroundColor: '#E5E5EA' },
   progressArea: { padding: 16, paddingTop: 8, gap: 8, backgroundColor: '#FFFFFF' },
   progressText: { fontSize: 13, color: '#636366' }, track: { height: 3, backgroundColor: '#E5E5EA', borderRadius: 2 },
   fill: { height: 3, borderRadius: 2, backgroundColor: '#1C1C1E' },
