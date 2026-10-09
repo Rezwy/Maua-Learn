@@ -1,56 +1,44 @@
-# Welcome to your Expo app 👋
+# Maua Learn
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+An iPhone-first learning prototype for people working across time zones. The main lesson teaches a clear handoff: give context, name the next action, set a deadline, and offer a safe alternative.
 
-## Get started
+## Implemented experience
 
-1. Install dependencies
+- One guided lesson, **A clear handoff, across time zones**, designed for approximately 5–8 minutes. Seven steps cover introduction, concept, scenario, two decisions, writing practice, and reflection.
+- The first decision changes the next morning's situation, choices, and final recap. Recommendations explain the scenario's constraints.
+- Previous-step review and device-local resume preserve choices, first/current drafts, checked text, and reference visibility. Completed work remains available through **Review your lesson**.
+- A local writing checklist detects five structural signals and supports revision/comparison. It cannot judge meaning, verify facts, or approve a message for sending.
+- Four optional five-question decision drills are separate from the guided lesson.
+- System typography, a persistent primary action, keyboard avoidance, accessible labels/announcements, and reduced-motion support. Native iPhone behavior still requires device verification.
 
-   ```bash
-   npm install
-   ```
+## Run locally
 
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+Use a supported Node.js release; this revision was verified with Node.js 24.13.0. Dependencies are pinned in `package-lock.json`.
 
 ```bash
-npm run reset-project
+npm ci
+npx expo start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+For a browser preview:
 
-### Other setup steps
+```bash
+npx expo start --web
+```
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+## Verify
 
-## Learn more
+```bash
+npx expo lint
+npx tsc --noEmit
+npm run test:learning
+npx expo export --platform web --output-dir dist --max-workers 2
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+Behavior tests cover misleading checklist inputs, branching decisions, draft retention, stale feedback, and legacy session restoration. Web export generates individual lesson routes; Vercel uses `dist` with clean URLs.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Scope and evidence
 
-## Join the community
+Content and people are fictional. The interface is English-only. Progress is stored on this device; there is no account, organization integration, or cross-device sync. Default Expo artwork has been replaced with a simple Maua Learn mark.
 
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+An iOS build, TestFlight distribution, and App Store submission have not been performed. See [TESTING.md](./TESTING.md) for results, native verification gaps, and the EAS audit. See [DEMO.md](./DEMO.md) for the reviewer walkthrough.

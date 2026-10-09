@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Animated,
+  AccessibilityInfo,
   Pressable,
   type GestureResponderEvent,
   type PressableProps,
@@ -36,8 +37,17 @@ export function TactilePressable({
   ...rest
 }: TactilePressableProps) {
   const [scale] = useState(() => new Animated.Value(1));
+  const [reduceMotion, setReduceMotion] = useState(false);
+
+  useEffect(() => {
+    let active = true;
+    void AccessibilityInfo.isReduceMotionEnabled().then((value) => { if (active) setReduceMotion(value); });
+    const subscription = AccessibilityInfo.addEventListener('reduceMotionChanged', setReduceMotion);
+    return () => { active = false; subscription.remove(); };
+  }, []);
 
   const animateTo = (toValue: number) => {
+    if (reduceMotion) { scale.setValue(1); return; }
     Animated.spring(scale, {
       toValue,
       speed: 40,

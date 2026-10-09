@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import Head from 'expo-router/head';
 import * as SplashScreen from 'expo-splash-screen';
 
 import { Colors } from '@/constants/theme';
@@ -15,6 +16,7 @@ export default function RootLayout() {
 
   return (
     <>
+      <Head><title>Maua Learn</title><meta name="description" content="Practical learning for teams working across time zones." /></Head>
       <StatusBar style="dark" />
       <Stack
         screenOptions={{

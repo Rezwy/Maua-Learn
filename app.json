@@ -1,28 +1,27 @@
 {
   "expo": {
-    "name": "maua-learn",
+    "name": "Maua Learn",
     "slug": "maua-learn",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/maua-app-icon.png",
     "scheme": "maualearn",
     "userInterfaceStyle": "light",
     "ios": {
-      "icon": "./assets/expo.icon"
+      "icon": "./assets/images/maua-app-icon.png"
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/images/android-icon-foreground.png",
-        "backgroundImage": "./assets/images/android-icon-background.png",
-        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+        "backgroundColor": "#1C1C1E",
+        "foregroundImage": "./assets/images/maua-adaptive.png",
+        "monochromeImage": "./assets/images/maua-adaptive.png"
       },
       "predictiveBackGestureEnabled": false,
       "package": "com.masonix.maualearn"
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/maua-app-icon.png"
     },
     "plugins": [
       "expo-router",
@@ -30,7 +29,7 @@
         "expo-splash-screen",
         {
           "backgroundColor": "#FFFFFF",
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/images/maua-mark.png",
           "imageWidth": 76
         }
       ]
